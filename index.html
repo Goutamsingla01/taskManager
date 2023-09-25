@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Notes</title>
+    <link href="bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+</head>
+<body>
+    <header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid ">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link" href="#">Features</a>
+              <a class="nav-link" href="#">Pricing</a>
+              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class="container mt-4 w-50">
+      <div class="input-group mb-3 " >
+        <input type="text" class="form-control" placeholder="Chapter Name" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <button id="addBtn" class="btn btn-outline-success" type="button" id="button-addon2" onclick="addChapters(this)">ADD</button>
+      </div>
+      <ul id="parentElem" class="list-group">
+        <!-- <li class="list-group-item d-flex justify-content-between"><h3 class="flex-grow-1">An item</h3>
+             <button class="btn btn-warning mx-4 " onclick="editChapter(this)">Edit</button>
+             <button class="btn btn-danger" onclick="removeChapter(this)">Remove</button> </li> -->
+             <h3 class="emptyMsg d-flex justify-content-center">Nothing to show!!</h3>
+      </ul>
+    </div>
+</main>
+<footer>
+  <div class="container d-flex justify-content-center">
+  <a class="btn btn-primary" aria-current="page" href="https://api.whatsapp.com/send/?phone=918619844404&text&type=phone_number&app_absent=0">Home</a>
+</div>
+</footer>
+<script>
+        let parentElem=document.getElementById('parentElem');
+        function addChapters(elem){
+            if(parentElem.children[0].className.includes("emptyMsg")){
+                parentElem.children[0].remove();
+            }
+            let inputName=elem.previousElementSibling   //e.currentTarget
+            let chapterName=inputName.value
+            
+            let newLi=document.createElement('li')  
+            // newLi.classlist.add('list-group-item')
+            newLi.className="list-group-item d-flex justify-content-between"
+            newLi.innerHTML=`<h3 class="flex-grow-1">${chapterName}</h3>
+             <button class="btn btn-warning mx-4" onclick="editChapter(this)">Edit</button>
+             <button  class="btn btn-danger" onclick="removeChapter(this)">Remove</button>`
+             parentElem.appendChild(newLi)
+        }
+        function removeChapter(currentElem){
+            currentElem.parentNode.remove();
+            let parentElem=document.getElementById('parentElem');
+            if(parentElem.children.length<=0){
+                let nothing=document.createElement('h3');
+                nothing.className="emptyMsg d-flex justify-content-center"
+                nothing.textContent='Nothing to show!!'
+                parentElem.appendChild(nothing)
+            }
+        }
+        function editChapter(currentElem){
+            if(currentElem.textContent=='Edit'){
+            currentElem.textContent='Done'
+            let editChap=document.createElement('input');
+            editChap.setAttribute('type','text')
+            editChap.className="form-control flex-grow-1"
+            editChap.placeholder="Chapter Name"
+            editChap.value=currentElem.previousElementSibling.textContent;
+            currentElem.previousElementSibling.replaceWith(editChap)
+
+            }
+            else{
+                currentElem.textContent='Edit'
+                let currChap=document.createElement('h3');
+                currChap.className="flex-grow-1"
+                let editChap=currentElem.previousElementSibling.value
+                currChap.textContent=editChap;
+                currentElem.previousElementSibling.replaceWith(currChap)
+            }
+        }
+</script>
+</body>
+</html>
